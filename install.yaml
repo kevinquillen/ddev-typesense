@@ -1,6 +1,6 @@
 name: typesense
 
-pre_install_actions:
+pre_install_commands:
   - mkdir $(DDEV_APPROOT)/typesense-data
 
 project_files:
