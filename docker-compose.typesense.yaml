@@ -7,22 +7,22 @@ services:
     command: '--data-dir /data --api-key=test --enable-cors'
     networks: [default, ddev_default]
     restart: "no"
-    environment:
-      - VIRTUAL_HOST=$DDEV_HOSTNAME
     ports:
       - "8108:8108"
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
     volumes:
-    - "typesense:/data"
-    - ".:/mnt/ddev_config"
+      - "typesense:/data"
+      - ".:/mnt/ddev_config"
   typesense_admin:
-    container_name: typesense_admin
+    container_name: ddev-${DDEV_SITENAME}-typesense-admin
     image: ghcr.io/lewynation/typesense-admin-dashboard:latest
     restart: always
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
     ports:
-      - "3005:3000"
+      - 3005:3000
     external_links:
       - "ddev-router:${DDEV_SITENAME}.${DDEV_TLD}"
     labels:
