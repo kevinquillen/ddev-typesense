@@ -1,0 +1,16 @@
+#ddev-generated
+services:
+  addon-template:
+    container_name: ddev-${DDEV_SITENAME}-typesense
+    hostname: ${DDEV_SITENAME}-typesense
+    image: typesense/typesense:0.25.1
+    command: '--data-dir /data --api-key=test --enable-cors'
+    networks: [default, ddev_default]
+    restart: "no"
+    ports:
+      - "8108:8108"
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    volumes:
+    - "./typesense-data:/data"
