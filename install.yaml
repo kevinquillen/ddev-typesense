@@ -1,10 +1,4 @@
 name: typesense
 
-pre_install_commands:
-  - mkdir $(DDEV_APPROOT)/typesense-data
-
 project_files:
   - docker-compose.typesense.yaml
-
-removal_actions:
-  - rm $(DDEV_APPROOT)/typesense-data
