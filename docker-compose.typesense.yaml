@@ -25,6 +25,9 @@ services:
       - "3005:3000"
     external_links:
       - "ddev-router:${DDEV_SITENAME}.${DDEV_TLD}"
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
 volumes:
   # typesense is a persistent Docker volume for typesense data
   # The persistent volume should have the same name as the service so it can be deleted
