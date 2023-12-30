@@ -4,9 +4,12 @@ services:
     container_name: ddev-${DDEV_SITENAME}-typesense
     hostname: ${DDEV_SITENAME}-typesense
     image: typesense/typesense:0.25.1
-    command: '--data-dir /data --api-key=test --enable-cors'
+    command: '--data-dir /data --enable-cors'
     networks: [default, ddev_default]
     restart: "no"
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - TYPESENSE_API_KEY=${TYPESENSE_API_KEY:-ddev}
     ports:
       - "8108:8108"
     labels:
@@ -17,19 +20,16 @@ services:
       - ".:/mnt/ddev_config"
   typesense_admin:
     container_name: ddev-${DDEV_SITENAME}-typesense-admin
-    image: ghcr.io/lewynation/typesense-admin-dashboard:latest
+    image: ghcr.io/bfritscher/typesense-dashboard:latest
     restart: always
-    environment:
-      - VIRTUAL_HOST=$DDEV_HOSTNAME
-    ports:
-      - 3005:3000
-    external_links:
-      - "ddev-router:${DDEV_SITENAME}.${DDEV_TLD}"
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
+    ports:
+      - "8109:80"
+    environment:
+      - VIRTUAL_HOST=typesense.$DDEV_HOSTNAME
+    external_links:
+      - "ddev-router:${DDEV_SITENAME}.${DDEV_TLD}"
 volumes:
-  # typesense is a persistent Docker volume for typesense data
-  # The persistent volume should have the same name as the service so it can be deleted
-  # when the project is deleted.
   typesense:
