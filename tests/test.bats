@@ -13,7 +13,7 @@ setup() {
 
 health_checks() {
   ddev exec "curl -s typesense:8108/health" | grep "true"
-  ddev exec curl -s -o /dev/null -I -w "%{http_code}" 127.0.0.1:8109/#/login | grep "200"
+  ddev exec curl -s -o /dev/null -I -w "%{http_code}" typesense.ddev.site:8109/#/login | grep "200"
 }
 
 teardown() {
