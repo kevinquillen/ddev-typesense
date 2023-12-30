@@ -18,6 +18,12 @@ services:
     volumes:
       - "typesense:/data"
       - ".:/mnt/ddev_config"
+  # This links the Typesense service to the web service defined in the main
+  # docker-compose.yml, allowing applications running inside the web container to
+  # access the Typesense service at http://typesense:8108
+  web:
+    links:
+      - typesense:typesense
   typesense_admin:
     container_name: ddev-${DDEV_SITENAME}-typesense-admin
     image: ghcr.io/bfritscher/typesense-dashboard:latest
