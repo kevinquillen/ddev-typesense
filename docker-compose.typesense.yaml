@@ -6,9 +6,8 @@ services:
     image: typesense/typesense:0.25.1
     command: '--data-dir /data --enable-cors'
     networks: [default, ddev_default]
-    restart: "no"
+    restart: "on-failure"
     environment:
-      - VIRTUAL_HOST=$DDEV_HOSTNAME
       - TYPESENSE_API_KEY=${TYPESENSE_API_KEY:-ddev}
     ports:
       - "8108:8108"
