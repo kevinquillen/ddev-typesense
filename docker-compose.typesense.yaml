@@ -26,7 +26,7 @@ services:
   typesense_admin:
     container_name: ddev-${DDEV_SITENAME}-typesense-admin
     image: ghcr.io/bfritscher/typesense-dashboard:latest
-    restart: always
+    restart: "on-failure"
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
